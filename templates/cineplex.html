@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+        #lb1{
+            width: 40%;
+            height: 75vh;
+            background-size: 100% 100%;
+            margin: auto;
+
+        }
+        #movies #row div{
+            height: 30em;
+            width: 15em;
+        }
+        .col-5 > div{
+            height: 10em;
+            width: 7.5em;
+            background-size: cover;
+        }
+        .container{
+            width: 50%;
+        }
+        #head h5{
+            margin: auto;
+        }
+        .col-2 > div{
+            margin-top: 4em;
+            margin-bottom: 4em;
+        }
+    </style>
+    <script type="text/javascript">
+            function getImages(){
+            const movList = {{ movies | tojson}};
+            let abv = "tt";
+            for (let i=0; i<=22; i++){
+                let imdb1 = abv.concat(movList[i]);
+                let imdb2 = abv.concat(movList[i+1]);
+                
+                console.log("passed image: "+imdb1);
+                console.log("passed image1: "+imdb2);
+    
+                const Http = new XMLHttpRequest();
+                const url='https://api.themoviedb.org/3/movie/'+imdb1+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+                Http.open("GET", url);
+                Http.send();
+
+                const Http1 = new XMLHttpRequest();
+                const url1='https://api.themoviedb.org/3/movie/'+imdb2+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+                Http1.open("GET", url1);
+                Http1.send();
+
+                let id = i.toString()
+                Http.onreadystatechange = (e) => {
+                const response = JSON.parse(Http.responseText);
+                console.log(response.poster_path);
+                var posturl = 'https://image.tmdb.org/t/p/w500/'+response.poster_path;
+                var img = document.getElementById(id);
+                console.log("url("+posturl+")");
+                img.style.backgroundImage = "url("+posturl+")";
+            }
+            }
+        }
+    
+    </script>
+</head>
+
+<body onload="getImages();">
+    <nav id="nav" class="navbar navbar-light bg-light">
+
+        <a class="navbar-brand" href="/">Movie Recommender</a>
+    </nav>
+    <a class="btn btn-primary" id="predict" href="/ranking">Generate rankings</a>
+    <div id="main" class="container">
+        
+        <div id ="head"class="row"><h5>Here is your predictions</h5></div>
+
+       
+            <div id="movies" class="row">
+            
+                    <div class="col-5">
+                        <div id= "1"></div>
+            
+                    </div>
+                    <div class="col-5">
+                        <div id="2"></div>
+      
+                    </div>
+                    <div class="col-2">
+                        <div>
+                            {% if r[0][3] == 999 %}
+                            <p>No prediction</p>
+                            {% else %}
+                            {{ r[0][3] }}
+                            {% endif %}
+                            
+                        </div>
+                        
+                    </div>
+              
+
+           
+         
+                    <div class="col-5">
+                        <div id= "3"></div>
+           
+                    </div>
+                    <div class="col-5">
+                        <div id = "4"></div>
+    
+                    </div>
+                    <div class="col-2">
+                        <div>
+                            {% if r[1][3] == 999 %}
+                            <p>No prediction</p>
+                            {% else %}
+                            {{ r[1][3] }}
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+            
+         
+           
+                    <div class="col-5">
+                        <div id= "5"></div>
+            
+                    </div>
+                    <div class="col-5">
+                        <div id="6"></div>
+             
+                    </div>
+                    <div class="col-2">
+                        <div>
+                            {% if r[2][3] == 999 %}
+                            <p>No prediction</p>
+                            {% else %}
+                            {{ r[2][3] }}
+                            {% endif %}
+                        </div>
+                       
+                    </div>
+                
+    
+                
+                    <div class="col-5">
+                        <div id="7"></div>
+                      
+                    </div>
+                    <div class="col-5">
+                        <div id="8"></div>
+                       
+                    </div>
+                    <div class="col-2">
+                        <div>
+
+                            {% if r[3][3] == 999 %}
+                            <p>No prediction</p>
+                            {% else %}
+                            {{ r[3][3] }}
+                            {% endif %}
+                        </div>
+                       
+                    </div>
+            
+               
+         
+                <div class="col-5">
+                    <div id= "9"></div>
+                   
+                </div>
+                <div class="col-5">
+                    <div id="10"></div>
+              
+                </div>
+                <div class="col-2">
+                    <div>
+                        {% if r[4][3] == 999 %}
+                        <p>No prediction</p>
+                        {% else %}
+                        {{ r[4][3] }}
+                        {% endif %}
+                    </div>
+                    
+                </div>
+                <div class="col-5">
+                    <div id= "11"></div>
+                   
+                </div>
+                <div class="col-5">
+                    <div id="12"></div>
+              
+                </div>
+                <div class="col-2">
+                    <div>
+                        {% if r[5][3] == 999 %}
+                        <p>No prediction</p>
+                        {% else %}
+                        {{ r[5][3] }}
+                        {% endif %}
+                    </div>
+                   
+                </div>
+         
+                <div class="col-5">
+                    <div id= "13"></div>
+             
+                </div>
+                <div class="col-5">
+                    <div id="14"></div>
+             
+                </div>
+                <div class="col-2">
+                    <div>
+                        {% if r[6][3] == 999 %}
+                        <p>No prediction</p>
+                        {% else %}
+                        {{ r[6][3] }}
+                        {% endif %}
+                    </div>
+                    
+                </div>
+     
+            <div class="col-5">
+                <div id ="15"></div>
+           
+            </div>
+            <div class="col-5">
+                <div id="16"></div>
+       
+            </div>
+            <div class="col-2">
+                <div>
+                    {% if r[7][3] == 999 %}
+                    <p>No prediction</p>
+                    {% else %}
+                    {{ r[7][3] }}
+                    {% endif %}
+                </div>
+               
+            </div>
+    
+    
+            <div class="col-5">
+                <div id= "17"></div>
+            
+            </div>
+            <div class="col-5">
+                <div id="18"></div>
+        
+            </div>
+            <div class="col-2">
+                <div>
+                    {% if r[8][3] == 999 %}
+                    <p>No prediction</p>
+                    {% else %}
+                    {{ r[8][3] }}
+                    {% endif %}
+                </div>
+                
+            </div>
+      
+            <!-- <div class="col-5">
+                <div id= "19"></div>
+              
+            </div>
+            <div class="col-5">
+                <div id="20"></div>
+      
+            </div>
+            <div class="col-2">
+                <div>
+                    {% if r[9][3] == 999 %}
+                    <p>No prediction</p>
+                    {% else %}
+                    {{ r[9][3] }}
+                    {% endif %}
+                </div>
+                
+            </div> -->
+        </div>
+    
+    
+    </div>
+    
+</body>

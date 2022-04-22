@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+        #lb1{
+            width: 40%;
+            height: 75vh;
+            background-size: 100% 100%;
+            margin: auto;
+        }
+        #movies #row div{
+            height: 30em;
+            width: 15em;
+        }
+    </style>
+    <script type="text/javascript">
+function getImages(){
+
+
+            for (let i =0; i < 10; i ++){
+                let movlist = "{{ movies }}"
+                const imbd1 = "tt"+rank[i];
+                const imbd2 = "tt"+rank[i+1];
+                // console.log("{{ m2 }}")
+                // const imbd1 = "{{ m1 }}";
+                // const imbd2 = "{{ m2 }}";
+
+                console.log("passed image: "+imbd1);
+                console.log("passed image1: "+imbd2);
+    
+                const Http = new XMLHttpRequest();
+                const url='https://api.themoviedb.org/3/movie/'+imbd1+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+                Http.open("GET", url);
+                Http.send();
+
+                const Http1 = new XMLHttpRequest();
+                const url1='https://api.themoviedb.org/3/movie/'+imbd2+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+                Http1.open("GET", url1);
+                Http1.send();
+
+                let id = i.toString()
+                Http.onreadystatechange = (e) => {
+                const response = JSON.parse(Http.responseText);
+                console.log(response.poster_path);
+                var posturl = 'https://image.tmdb.org/t/p/w500/'+response.poster_path;
+                var img = document.getElementById(id);
+                console.log("url("+posturl+")");
+                img.style.backgroundImage = "url("+posturl+")";
+            }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <nav id="nav" class="navbar navbar-light bg-light">
+
+        <a class="navbar-brand" href="/">Movie Recommender</a>
+    </nav>
+    <div id="main" class="container">
+        
+        <div id ="head"class="row"><h5>Here is your predicted ranking</h5></div>
+
+        <div id="movies" class="row">
+            {{ rank }}
+        </div>
+</div>
+            
+   
+</body>

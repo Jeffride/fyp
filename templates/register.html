@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 style="text-align: center; color: rgb(255, 255, 255);">Create an Account</h1>
+<br>
+<form action="" method="post">
+   {{ form.hidden_tag() }}
+   <div>
+      <p>Username {{ form.username }}</p>
+   
+      {% for error in form.username.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>
+      <p>Password   {{ form.password1}}</p>
+    
+      {% for error in form.password1.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div>
+      <p>Confirm {{ form.password2}}</p>
+      {% for error in form.password2.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+   </div>
+   <br>
+   <div class="msg">{{ msg }}</div>
+   <div>{{ form.submit }}
+   </div>
+</form>
+<p></p>
+<p style = "color: rgb(255, 255, 255);"><a href="{{ url_for('login') }}">Already have an account?</a></p>
+{% endblock %}

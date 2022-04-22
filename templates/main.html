@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <style>
+@-webkit-keyframes SPINNER {
+  0%   { -webkit-transform: translate(-50%,-50%) rotate(0deg); }
+  100% { -webkit-transform: translate(-50%,-50%) rotate(360deg); }
+}
+@-moz-keyframes SPINNER {
+  0%   { -moz-transform: translate(-50%,-50%) rotate(0deg); }
+  100% { -moz-transform: translate(-50%,-50%) rotate(360deg); }
+}
+@-ms-keyframes SPINNER {
+  0%   { -ms-transform: translate(-50%,-50%) rotate(0deg); }
+  100% { -ms-transform: translate(-50%,-50%) rotate(360deg); }
+}
+@-o-keyframes SPINNER {
+  0%   { -o-transform: translate(-50%,-50%) rotate(0deg); }
+  100% { -o-transform: translate(-50%,-50%) rotate(360deg); }
+}
+@keyframes SPINNER {
+  0%   { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+@-webkit-keyframes LABEL {
+  0%   { opacity: 1.0; -webkit-transform: translate(-50%,-50%) scale(1.0); }
+  5%   { opacity: 0.5; -webkit-transform: translate(-50%,-50%) scale(0.5); }
+  95%  { opacity: 0.5; -webkit-transform: translate(-50%,-50%) scale(0.5); }
+  100% { opacity: 1.0; -webkit-transform: translate(-50%,-50%) scale(1.0); }
+}
+@-moz-keyframes LABEL {
+  0%   { opacity: 1.0; -moz-transform: translate(-50%,-50%) scale(1.0); }
+  5%   { opacity: 0.5; -moz-transform: translate(-50%,-50%) scale(0.5); }
+  95%  { opacity: 0.5; -moz-transform: translate(-50%,-50%) scale(0.5); }
+  100% { opacity: 1.0; -moz-transform: translate(-50%,-50%) scale(1.0); }
+}
+@-ms-keyframes LABEL {
+  0%   { opacity: 1.0; -ms-transform: translate(-50%,-50%) scale(1.0); }
+  5%   { opacity: 0.5; -ms-transform: translate(-50%,-50%) scale(0.5); }
+  95%  { opacity: 0.5; -ms-transform: translate(-50%,-50%) scale(0.5); }
+  100% { opacity: 1.0; -ms-transform: translate(-50%,-50%) scale(1.0); }
+}
+@-o-keyframes LABEL {
+  0%   { opacity: 1.0; -o-transform: translate(-50%,-50%) scale(1.0); }
+  5%   { opacity: 0.5; -o-transform: translate(-50%,-50%) scale(0.5); }
+  95%  { opacity: 0.5; -o-transform: translate(-50%,-50%) scale(0.5); }
+  100% { opacity: 1.0; -o-transform: translate(-50%,-50%) scale(1.0); }
+}
+@keyframes LABEL {
+  0%   { opacity: 1.0; transform: translate(-50%,-50%) scale(1.0); }
+  5%   { opacity: 0.5; transform: translate(-50%,-50%) scale(0.5); }
+  95%  { opacity: 0.5; transform: translate(-50%,-50%) scale(0.5); }
+  100% { opacity: 1.0; transform: translate(-50%,-50%) scale(1.0); }
+}
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  vertical-align: top;
+}
+.overlay {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,1.0);
+}
+.overlay .spinner,
+.overlay .spinner:before,
+.overlay .spinner:after {
+  border: 10px solid rgba(0,0,0,0);
+  border-top: 10px solid #ccc;
+  border-bottom: 10px solid #ccc;
+  border-radius: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.overlay .spinner:before,
+.overlay .spinner:after {
+  content: "";
+}
+.overlay .spinner {
+  width: 350px;
+  height: 350px;
+  -webkit-animation: SPINNER 5s linear infinite;
+  -moz-animation: SPINNER 5s linear infinite;
+  -ms-animation: SPINNER 5s linear infinite;
+  -o-animation: SPINNER 5s linear infinite;
+  animation: SPINNER 5s linear infinite;
+}
+.overlay .spinner:before {
+  width: 290px;
+  height: 290px;
+  -webkit-animation: SPINNER 10s linear infinite;
+  -moz-animation: SPINNER 10s linear infinite;
+  -ms-animation: SPINNER 10s linear infinite;
+  -o-animation: SPINNER 10s linear infinite;
+  animation: SPINNER 10s linear infinite;
+}
+.overlay .spinner:after {
+  width: 220px;
+  height: 220px;
+  -webkit-animation: SPINNER 5s linear infinite;
+  -moz-animation: SPINNER 5s linear infinite;
+  -ms-animation: SPINNER 5s linear infinite;
+  -o-animation: SPINNER 5s linear infinite;
+  animation: SPINNER 5s linear infinite;
+}
+.overlay .label {
+  color: #ccc;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-animation: LABEL 5s linear infinite;
+  -moz-animation: LABEL 5s linear infinite;
+  -ms-animation: LABEL 5s linear infinite;
+  -o-animation: LABEL 5s linear infinite;
+  animation: LABEL 5s linear infinite;
+}
+button[type="button"] {
+  padding: 0.5rem 1rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+/* Customize */
+.overlay {
+  background: #000;
+  
+}
+.overlay .spinner,
+.overlay .spinner:before,
+.overlay .spinner:after {
+  border-top-color: rgb(255, 255, 255) !important;
+  border-bottom-color: rgb(117, 117, 117) !important;
+}
+.overlay .label {
+  color: rgb(255, 255, 255);
+}
+#welcome{
+    margin-top: 4em !important;
+    width: 50%;
+    text-align: center;
+    margin: auto;
+    background-color: #121212;
+    padding: 2em;
+    border-radius: 0.5em;
+    font-weight: lighter;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+#welcome h4{
+    text-align: left;
+}
+#welcome p{
+    text-align: left;
+    margin-top: 1em;
+}
+#welcome a{
+    margin-top: 1em;
+}
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getImages(){
+            const imbd1 = "tt"+"{{ m1 }}";
+            const imbd2 = "tt"+"{{ m2 }}";
+            // console.log("{{ m2 }}")
+            // const imbd1 = "{{ m1 }}";
+            // const imbd2 = "{{ m2 }}";
+            console.log("passed image: "+imbd1);
+            console.log("passed image1: "+imbd2);
+  
+            const Http = new XMLHttpRequest();
+            const url='https://api.themoviedb.org/3/movie/'+imbd1+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+            Http.open("GET", url);
+            Http.send();
+
+            const Http1 = new XMLHttpRequest();
+            const url1='https://api.themoviedb.org/3/movie/'+imbd2+'?api_key=7426823b47a5dbc4a596b3e2647ec507&language=en-US';
+
+            Http1.open("GET", url1);
+            Http1.send();
+
+            Http.onreadystatechange = (e) => {
+                const response = JSON.parse(Http.responseText);
+                console.log(response.poster_path);
+                var posturl = 'https://image.tmdb.org/t/p/w500/'+response.poster_path;
+                var img = document.getElementById('lb1');
+                console.log("url("+posturl+")");
+                img.style.backgroundImage = "url("+posturl+")";
+            }
+            Http1.onreadystatechange = (e) => {
+                const response = JSON.parse(Http1.responseText);
+                console.log(response.poster_path);
+                var posturl = 'https://image.tmdb.org/t/p/w500/'+response.poster_path;
+                var img = document.getElementById('lb2');
+                console.log("url("+posturl+")");
+                img.style.backgroundImage = "url("+posturl+")";
+            }
+
+        }
+        function doSubmit(mov1,mov2,choice){
+            document.myform.movieid1.value = mov1
+            document.myform.movieid2.value = mov2
+            document.myform.choice.value = choice
+            document.getElementById("myform").submit();
+        }
+        function MovieSelect(chkMovie) {
+
+            if (chkMovie.value == 1) {
+                console.log('Image ID 1: ' + '{{ m1id }}');
+                console.log('Image ID 2: ' + '{{ m2id }}');
+                doSubmit('{{ m1id }}','{{ m2id }}',1);
+            } else {
+                console.log('Image ID 1: ' + '{{ m1id }}');
+                console.log('Image ID 2: ' + '{{ m2id }}');
+                doSubmit('{{ m1id }}','{{ m2id }}',-1);
+            }
+        }
+        function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        }
+
+        function hidePage(){
+            document.getElementById("content").style.display = none;
+        }
+        $(function () {
+            $("#predict").click(function(e) {
+        e.preventDefault();
+        $("#loading").show();
+
+        var url=$(this).attr("href");
+
+        setTimeout(function() {
+            setTimeout(function() {showSpinner();},30);
+            window.location=url;
+        },0);
+
+   });
+});
+function showSpinner() {
+    var opts = {
+      lines: 15, // The number of lines to draw
+      length: 3, // The length of each line
+      width: 4, // The line thickness
+      radius: 30, // The radius of the inner circle
+      rotate: 0, // The rotation offset
+      color: '#fff', // #rgb or #rrggbb
+      speed: 2, // Rounds per second
+      trail: 70, // Afterglow percentage
+      shadow: false, // Whether to render a shadow
+      hwaccel: false, // Whether to use hardware acceleration
+      className: 'spinner', // The CSS class to assign to the spinner
+      zIndex: 2e9, // The z-index (defaults to 2000000000)
+      top: 'auto', // Top position relative to parent in px
+      left: 'auto' // Left position relative to parent in px
+    };
+    $('#loading_anim').each(function() {
+        spinner = new Spinner(opts).spin(this);
+    });
+}
+    $(function(){
+    $('#predict').on('click',function(){
+        $('.overlay').fadeToggle();
+        $("#contain").hide();
+        $("#movies").hide();
+        $("#nav").hide();
+        $("#count").hide();
+    });
+    });
+    </script>
+
+</head>
+
+<body onload="getImages()" id="content">
+    <div id="mySidenav" class="sidenav">
+        
+    <p>Welcome {{current_user.username}}</p>
+ 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Home</a>
+        <a href="/main">Method 1</a>
+        <a href="/train">Training</a>
+        <a href="#">About</a>
+        <a href="/logout">logout</a>
+      </div>
+
+      
+    <nav id="nav" class="navbar navbar-light bg-light">
+        <span style="font-size:30px;cursor:pointer;margin-right:.5em;" onclick="openNav()">&#9776; </span>
+        <a class="navbar-brand" href="/">Movie Recommender</a>
+
+        <!-- <a class="btn btn-primary" id="submit" href="/predictions">Make predictions</a> -->
+        <a class="btn btn-primary" id="predict" href="/cineplex" onclick="hidePage()">Make predictions</a>
+    </nav>
+
+
+    <div class="overlay">
+        <div class="spinner"></div>
+        <div class="label">Making Predictions</div>
+    </div>
+    
+
+    <div id="main" id="contain" class="container">
+        {% if info == true %}
+        
+        <div id="welcome">
+            <h4>Welcome</h4>
+            <p>
+                This application will take your movie preferences and attempt to make to predictions as to what movies you will prefer.
+                Finally it will attempt to rank a set of 10 movies in order of relavency to you.
+    
+                To give a preference, simply click on the movie you prefer or if you can't decide just click skip.
+            
+            </p>
+            <a href="/main" class="btn btn-primary">Continue</a>
+        </div>
+
+        {% else  %}
+        <aside id="count"> Counter: {{ counter }}</aside>
+       
+        <div id ="head"class="row"><p>Click on the movie you prefer</p></div>
+        <div id="loading"><div id="loading_anim"></div></div>
+
+ 
+    
+
+        <div id="movies" class="row">
+
+            <div class="col-6">
+                <input type="checkbox" name='movieid1' value='1' id="movieid1" onclick="MovieSelect(this)"/><label for="movieid1" id='lb1'></label> 
+            </div>
+            <div class="col-6">
+                <input type="checkbox" name='movieid2' value ='2' id="movieid2" onclick="MovieSelect(this)"/><label for="movieid2" id="lb2"></label> 
+            </div>
+      
+        </div>
+        <div class="row"><a id="skip" class="btn btn-danger" href="/main">SKIP</a></div>
+        {% endif %}
+    <form name="myform" id = "myform" action="/main" method="POST">
+        <input type="hidden" name="movieid1" value="" />
+        <input type="hidden" name="movieid2" value="" />
+        <input type="hidden" name="choice" value="" />
+    </form>
+    </div>
+</body>

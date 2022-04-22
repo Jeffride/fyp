@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <script type="text/javascript">
+              function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        }
+      </script>
+</head>
+
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Home</a>
+    <a href="/login">Method 1</a>
+    <a href="/login"></a>
+    <a href="">About</a>
+  </div>
+    <nav id="nav" class="navbar navbar-light bg-light">
+      <span style="font-size:30px;cursor:pointer;margin-right:.5em;" onclick="openNav()">&#9776; </span>
+        <a class="navbar-brand" href="/">Movie Recommender</a>
+    </nav>
+    <div id="main" class="container">
+ 
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-9">
+            <div class="jumbotron">
+                <h1 class="display-3">Welcome!</h1>
+                <p class="lead">This is a movie recemmendation system built using AI.</p>
+                <p class="lead">
+        
+                  <a class="btn btn-primary btn-lg" href="/login" role="button">Lets go</a>
+           
+                </p>
+              </div>
+              <div id="about">
+              <h1>About</h1>
+              <p id>
+                Recommender Systems (RS's) have been one of the major success stories of AI in the past decade. They have become an integral part of the online world with users interacting with them through various domains such as e-commerce, streaming sites and social media to name a few.
+
+                For this project our RS learned from pairs of items (in this case movies) combined with a preference for one. Reasons for taking this approach are as follows: evaluating items in pairs is often considered easier for humans than giving absolute (5 star) ratings; we compare items every day to establish preferences. Secondly, we gather more information about the user with pairwise preferences. In an absolute rating scale, if a user gives two movies a 5 star rating, there is no way for them to specify which they prefer due to the scale limitation. Finally study has shown that pairwise can outperform ratings based RS's in terms of accuracy.
+                
+                Over the course of this project, several algorithms were experimented with. They were used to predict preferences and establish movie rankings for users. A user trial was also devised which took the best performing algorithms and used them to predict a ranking of 10 movies. If you would like to participate in this ongoing trial please come along to my stand on open day.
+              </p>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    
+</body>
